@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+
+  <link href="D.css" rel="stylesheet">
+</head>
+
+<body>
+
+<form>
+  <label class="obligatory"> username
+    <input type = "text">
+  </label><br/>
+  <label class="obligatory"> password
+    <input type = "password">
+  </label><br/>
+
+  <label class="obligatory">
+    <input type = "checkbox" name="first" value = "a">
+  </label><br/>
+  <label class="obligatory">
+    <input type = "checkbox" name ="second" value  = "b">
+  </label><br/>
+
+
+<input type="radio" id="firstOption" name="name" value="first">
+<label class="optional" for="firstOption">first</label><br>
+<input type="radio" id="secondOption" name="name" value="second">
+<label class="optional" for="secondOption">second</label><br>
+<input type="radio" id="thirdOption" name="name" value="third">
+<label class="optional" for="thirdOption">third</label><br/>
+
+
+<label for="dropOption">Choose an option</label><br/>
+
+<select name="drop" id="dropOption">
+  <option value="first">first</option>
+  <option value="second">second</option>
+  <option value="third">third</option>
+  <option value="fourth">fourth</option>
+</select><br/>
+
+  <label class="optional" for="textArea"></label><textarea id="textArea" name="textArea" rows="20" cols="10"> </textarea><br></br>
+
+<input type="submit" id="submitButton"><br/>
+<input type="reset" id="resetButton">
+
+
+ </form>
+</body>
+
+</html>

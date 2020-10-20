@@ -1,0 +1,39 @@
+.box{
+    background-color: gray;
+    height: 100%;
+    margin-left: 20%;
+    margin-right: 20%;
+    text-align: right;
+}
+
+#frontPhoto{
+    height: 60%;
+    width: 100%;
+    border: 5px dotted black;
+    background-color: olive;
+}
+header{
+    text-align: center;
+    margin-top: 7%;
+    margin-bottom: 2%;
+    font-size: xx-large;
+    margin-left: 5%;
+    text-decoration: underline;
+}
+.article{
+    align-content: center;
+    text-align: center;
+    font-size: medium;
+
+    background-color: cornflowerblue;
+    margin-left: 5%;
+    margin-right: 5%;
+    display: inline-block;
+    border: 3px black dotted;
+}
+a{
+    color: forestgreen;
+}
+a:hover{
+    color: navy;
+}

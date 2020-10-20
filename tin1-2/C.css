@@ -1,0 +1,24 @@
+body {
+    background-color: cornflowerblue;
+    color: black;
+}
+p {
+    font-style :italic;
+    font-size: 3rem;
+}
+header {
+    font-style: oblique;
+    font-size: 5rem;
+}
+.table {
+    border-color:  black;
+    border-style: dashed;
+
+}
+#link {
+    text-decoration: none;
+}
+ul li::marker {
+        color:red;
+    font-size: 0.5em;
+    }

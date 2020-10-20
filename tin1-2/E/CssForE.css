@@ -1,0 +1,56 @@
+header {
+    font-size: 50px;
+    text-align: center;
+}
+p {
+    font-size: 20px;
+}
+.column {
+    float:left;
+    width: 50%;
+    height: 300px;
+}
+
+#first{
+    max-width: 800px;
+    min-width: 100px;
+}
+#second {
+    max-width: 800px;
+    min-width: 100px;
+}
+.keyword{
+    background-color: lightgray;
+    font-weight:bold;
+}
+.rest{
+font-weight: normal;
+}
+#firstImageText{
+    max-width: 800px;
+    min-width: 200px;
+    clear: right;
+}
+#secondImageText{
+    max-width: 800px;
+    min-width: 200px;
+    clear: left;
+}
+#thirdImageText{
+    max-width: 800px;
+    min-width: 200px;
+    clear: right;
+}
+.codeBox{
+    height: 880px;
+    width: 800px;
+    background-color: lightgray;
+}
+.boldCode{
+    font-weight: bold;
+}
+.indented{
+    text-indent: 50px;
+}
+
+

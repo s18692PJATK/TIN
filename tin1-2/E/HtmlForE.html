@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Java 15 through the eyes of a Scala programmer</title>
+    <link href="CssForE.css" rel="stylesheet">
+</head>
+<body id="body">
+<header>
+    <article>
+        Java 15 through the eyes of a Scala programmer
+    </article>
+</header>
+<div class="row">
+    <div class="column">
+        <h2>Records</h2>
+        <p id="first">Let’s start with records, which are available as a (second) preview of the
+            upcoming final version. The amount of code that has been necessary to
+            create a simple data class has been an easy target when talking about Java’s
+            verbosity.
+        </p>
+        <br/>
+        <h3>When creating a data class, we typically write:</h3>
+        <ul>
+            <li>
+                <p>
+                    <span class="keyword">private final</span>
+                    <span>fields containing the data</span>
+                </p>
+            </li>
+            <li>
+                <p>a constructor setting the fields to given values</p>
+            </li>
+            <li>
+                <p>accessors to get the data</p>
+            </li>
+            <li>
+                <p>
+                    <span class="keyword">equals</span>
+                    <span>,</span>
+                    <span class="keyword">hashCode</span>
+                    <span>and</span>
+                    <span class="keyword">toString</span>
+                </p>
+            </li>
+        </ul>
+        <br/>
+
+
+        <div class="codeBox">
+            <p>
+                <span class="boldCode">class</span>
+                <span>Person {</span><br/>
+            </p>
+            <p style="text-indent: 30px;">
+                <span class="boldCode"> private final</span>
+                <span>String name;</span>
+            </p>
+            <p style="text-indent: 30px;">
+                <span class="boldCode"> private final</span>
+                <span>int age;</span>
+            </p>
+            <p style="text-indent: 30px">
+                Person(String name, int age) {
+            </p>
+            <p style="text-indent: 60px;">
+                <span class="boldCode"> this</span><span>.name = name;</span>
+            </p>
+            <p style="text-indent: 60px;">
+                <span class="boldCode"> this</span><span>.age = age;</span>
+            </p>
+            <p style="text-indent: 30px">}</p>
+
+            <p style="text-indent: 30px">String name() {
+                <span class="boldCode">return </span>
+                <span>name; }</span>
+            </p>
+            <p style="text-indent: 30px">int age {
+                <span class="boldCode">return </span>
+                <span>age; }</span>
+            </p>
+
+            <p style="text-indent: 30px">
+                <span class="boldCode">public boolean </span>
+                <span>equals(Object o) {</span>
+            </p>
+            <p style="text-indent: 60px">
+                <span class="boldCode">if</span>
+                <span>(!(o</span>
+                <span class="boldCode">instanceof</span>
+                <span>Person))</span>
+                <span class="boldCode">return false;</span>
+            </p>
+            <p style="text-indent: 60px">Person other = (Person) o;</p>
+            <p style="text-indent: 60px">
+                <span class="boldCode">return</span>
+                <span>Objects.hash(name, age);</span>
+            </p>
+            <p style="text-indent: 30px"> }</p>
+
+            <p style="text-indent: 30px">
+                <span class="boldCode"> public int</span>
+                <span>hashCode() {</span>
+            </p>
+            <p style="text-indent: 60px">
+                <span class="boldCode"> return</span>
+                <span> Objects.hash(name, age);</span>
+            </p>
+            <p style="text-indent: 30px"></p>
+            <p style="text-indent: 30px">
+                <span class="boldCode"> public </span>
+                <span> String toString() {</span>
+            </p>
+            <p style="text-indent: 60px">
+                <span class="boldCode"> return</span>
+                <span>String.format("Person[name=%s, age=%d]", name, age);</span>
+            </p>
+            <p style="text-indent: 30px"> }</p>
+            <p> }</p><br>
+
+            <h2>Lorem ipsum dolor sit amet, consectetur</h2>
+            <img src="randomPhoto.jpg" width="400" height="200" align="left">
+            <p id="firstImageText">
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+                reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+                pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+                culpa qui officia deserunt mollit anim id est laborum."
+            </p>
+        </div>
+    </div>
+
+
+    <div class="column">
+        <h2>Sealed classes</h2>
+        <p id="second">A very much related feature, making its debut in Java 15,
+            is support for sealed classes and interfaces. This allows restricting
+            the possible implementations of a class or interface. Then, any code
+            using the abstract class or interface can safely make assumption about
+            the possible shape of a value. Quite often we want to make our class widely
+            accessible, but not necessarily widely extensible.
+        </p><br/>
+        <img src="photo2.jpeg" width="400">
+        <p id="secondImageText">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+            nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+        </p>
+        <img src="photo3.png" align="left">
+        <h2>Lorem ipsum dolor sit amet</h2>
+        <p id="thirdImageText">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Etiam a sagittis magna. Nulla semper, magna a lobortis porttitor
+            , lorem nisi luctus sem, ut blandit diam purus sit amet ante.
+            Curabitur ut ante vitae diam semper hendrerit. Quisque rhoncus
+            viverra lobortis. Nulla vulputate congue luctus. Nulla maximus
+            dignissim nulla ut convallis. Sed molestie euismod nulla, sed dignissim
+            lorem maximus quis. Donec gravida augue bibendum condimentum aliquam.
+            Morbi ut posuere ipsum. Integer facilisis mauris tempus urna efficitur,
+            sit amet tristique ante posuere. Integer est metus, bibendum a suscipit eu,
+            bibendum at lacus. Mauris quis mollis massa. Vestibulum non quam felis.
+            Pellentesque habitant morbi tristique senectus et netus et malesuada fames
+            ac turpis egestas. Pellentesque commodo neque enim, in commodo orci elementum non
+            . Nulla lacinia ex sit amet odio posuere placerat. Integer vitae justo tortor.
+            Aliquam placerat pulvinar facilisis. Mauris mattis nec nulla in finibus. Vestibulum consequat
+            libero vel mauris ornare, quis tristique sapien laoreet. Nam odio urna, maximus
+            sed ligula dignissim, pellentesque tincidunt dui. Quisque lacinia velit nec
+            quam venenatis fermentum. Fusce eget lectus vitae massa vestibulum hendrerit.
+            Cras congue nisi at quam tempus, sit amet facilisis nulla finibus.
+            Donec non sem vulputate, vestibulum nibh ut, aliquam libero. Vestibulum
+            ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae;
+            Suspendisse eget turpis mauris. Quisque nec lorem sit amet nunc blandit suscipit.
+            Nam tempor cursus nunc vel ultricies. Suspendisse ultricies hendrerit porttitor.
+            Nunc pellentesque maximus iaculis. Nulla facilisi. Nam varius pharetra justo,
+            eleifend fermentum arcu condimentum at. Integer id interdum enim.
+        </p>
+    </div>
+</div>
+
+
+</body>
+</html>

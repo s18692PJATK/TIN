@@ -1,0 +1,15 @@
+form {
+    font-size: 20px;
+    font-style: normal;
+}
+input {
+    font-style: italic;
+    font-size :30px;
+}
+
+.obligatory {
+    color:red;
+}
+.optional {
+    color:blue;
+}

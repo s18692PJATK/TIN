@@ -1,0 +1,106 @@
+
+
+body{
+    margin: 0;
+    display: block;
+    background-color: forestgreen;
+}
+
+
+
+
+
+.container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 10px;
+}
+
+.container > .column {
+    padding: 0 10px;
+    flex: 20%
+}
+
+
+figcaption {
+    font-style: italic;
+    margin-bottom: 10px;
+    text-align: center;
+    font-size: medium;
+}
+
+blockquote {
+    color: blue;
+    text-align:center ;
+    font-size: larger;
+    font-style: revert;
+    font-family: Font1, serif;
+}
+
+header{
+    display: compact;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-top:10%;
+    font-size: x-large;
+}
+
+#headerPhoto{
+    width: 25%;
+    height: 10%;
+    box-shadow: 7px 7px #ffff00;
+    border-radius:10%;
+    transform: rotate(8deg);
+}
+
+.container > .column > figure > img {
+    width: 100%;
+    height: 20%;
+    padding: 20px 0;
+}
+
+.container > .column > img {
+    width:20%;
+    position: relative;
+    float: left;
+}
+
+
+footer{
+    display:block;
+    text-align: center;
+    background: yellow;
+    color: blue;
+    bottom: 0;
+    width:100%;
+    height: 80px;
+    font-size: medium;
+    font-family: Font2, serif;
+}
+
+@media screen and (max-width: 1200px) {
+    .container > .column {
+        flex: 100%;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .container {
+        flex-direction: column;
+    }
+}
+
+
+@font-face {
+    font-family: 'Font1';
+    src: url("../fonts/OpenSans-Italic.ttf");
+}
+
+@font-face {
+    font-family: 'Font2';
+    src: url("../fonts/RobotoCondensed-Italic.ttf");
+}
+

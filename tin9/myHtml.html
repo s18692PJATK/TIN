@@ -1,0 +1,34 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="second.js"></script>
+</head>
+<body>
+<div style="text-align: left;">
+    <form id="formCalculate">
+        <label for="first">Enter 1st number:</label><input type="number" id="first" name="first" required /><br>
+        <label for="second"> Enter 2nd number:</label><input type="number" id="second" name="second" required /><br>
+        <br>
+        <label for="operator">pick operator:</label>
+        <select id="operator">
+            <option value="add">+</option>
+            <option value="sub">-</option>
+            <option value="mul">*</option>
+            <option value="div">/</option>
+        </select>
+        <br>
+        <br>
+        <button onclick="calc()" type="button" >
+            Get result
+        </button>
+        <br>
+        <br>
+    </form>
+    Result:
+    <p></p>
+</div>
+</body>
+</html>

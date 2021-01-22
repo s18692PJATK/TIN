@@ -1,27 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="73119059-d9c8-4417-ac2d-d78604bfc5a2" name="Default Changelist" comment="" />
+    <list default="true" id="fd000a3b-ec45-41f3-b56d-3bce14349948" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/tin_frontend.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm.json" beforeDir="false" afterPath="$PROJECT_DIR$/elm.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Book.elm" beforeDir="false" afterPath="$PROJECT_DIR$/src/Book.elm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Collection.elm" beforeDir="false" afterPath="$PROJECT_DIR$/src/Collection.elm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.elm" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.elm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/User.elm" beforeDir="false" afterPath="$PROJECT_DIR$/src/User.elm" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
+  </component>
   <component name="ElmWorkspace">
     <elmProjects>
       <project path="$PROJECT_DIR$/elm.json" />
+      <project path="$PROJECT_DIR$/test/elm.json" />
     </elmProjects>
-    <settings elmCompilerPath="C:\Program Files (x86)\Elm\0.19.1\bin\elm.exe" elmFormatPath="" elmTestPath="" isElmFormatOnSaveEnabled="false" />
+    <settings elmCompilerPath="/run/current-system/sw/bin/elm" elmFormatPath="null" elmTestPath="/run/current-system/sw/bin/elm-test" isElmFormatOnSaveEnabled="false" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Elm Module" />
         <option value="HTML File" />
       </list>
     </option>
   </component>
-  <component name="ProjectId" id="1nFwHXslwdao2QJgcLo6d95z2al" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="$APPLICATION_HOME_DIR$/plugins/maven/lib/maven3" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="1" />
+  </component>
+  <component name="ProjectId" id="1nQWrUWPIzdelIErQJpbzbRanC5" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -30,7 +58,8 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../elm-in-action" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/test/elm.json" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -39,24 +68,25 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="org.elm.workspace.PROJECT_DISCOVERY" value="true" />
-    <property name="settings.editor.selected.configurable" value="org.elm.workspace.ui.ElmWorkspaceConfigurable" />
-    <property name="vue.rearranger.settings.migration" value="true" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/test" />
+    </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="73119059-d9c8-4417-ac2d-d78604bfc5a2" name="Default Changelist" comment="" />
-      <created>1610999060118</created>
+      <changelist id="fd000a3b-ec45-41f3-b56d-3bce14349948" name="Default Changelist" comment="" />
+      <created>1611322995299</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1610999060118</updated>
-      <workItem from="1610999061153" duration="14000" />
-      <workItem from="1610999083376" duration="32000" />
-      <workItem from="1610999167336" duration="4000" />
-      <workItem from="1610999362656" duration="140000" />
-      <workItem from="1610999522446" duration="4000" />
-      <workItem from="1610999621087" duration="39000" />
-      <workItem from="1611055387852" duration="5953000" />
+      <updated>1611322995299</updated>
+      <workItem from="1611322996326" duration="14716000" />
+      <workItem from="1611342005787" duration="2263000" />
     </task>
     <servers />
   </component>
@@ -64,29 +94,25 @@
     <option name="version" value="3" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="552" y="161" key="#Plugins" timestamp="1610999074203">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="3306" y="322" key="FileChooserDialogImpl" timestamp="1611333118729">
+      <screen x="2560" y="0" width="1920" height="1080" />
     </state>
-    <state x="552" y="161" key="#Plugins/0.0.1920.1040/-2560.-363.2560.1400@0.0.1920.1040" timestamp="1610999074203" />
-    <state x="757" y="309" key="#Web_Browsers" timestamp="1611067513223">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="3306" y="322" key="FileChooserDialogImpl/0.0.2560.1440/2560.0.1920.1080@2560.0.1920.1080" timestamp="1611333118729" />
+    <state x="3006" y="141" key="SettingsEditor" timestamp="1611339468545">
+      <screen x="2560" y="0" width="1920" height="1080" />
     </state>
-    <state x="757" y="309" key="#Web_Browsers/0.0.1920.1040/-2560.-363.2560.1400@0.0.1920.1040" timestamp="1611067513223" />
-    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1611067508290">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="3006" y="141" key="SettingsEditor/0.0.2560.1440/2560.0.1920.1080@2560.0.1920.1080" timestamp="1611339468545" />
+    <state width="498" height="446" key="SwitcherDM" timestamp="1611342829148">
+      <screen x="2560" y="0" width="1920" height="1080" />
     </state>
-    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040/-2560.-363.2560.1400@0.0.1920.1040" timestamp="1611067508290" />
-    <state x="461" y="165" key="SettingsEditor" timestamp="1610999413745">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state width="498" height="446" key="SwitcherDM/0.0.2560.1440/2560.0.1920.1080@2560.0.1920.1080" timestamp="1611342829148" />
+    <state x="3205" y="245" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1611339193085">
+      <screen x="2560" y="0" width="1920" height="1080" />
     </state>
-    <state x="461" y="165" key="SettingsEditor/0.0.1920.1040/-2560.-363.2560.1400@0.0.1920.1040" timestamp="1610999413745" />
-    <state width="498" height="398" key="SwitcherDM" timestamp="1611069163350">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="3205" y="245" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.2560.1440/2560.0.1920.1080@2560.0.1920.1080" timestamp="1611339193085" />
+    <state x="3222" y="288" width="588" height="518" key="find.popup" timestamp="1611339781575">
+      <screen x="2560" y="0" width="1920" height="1080" />
     </state>
-    <state width="498" height="398" key="SwitcherDM/0.0.1920.1040/-2560.-363.2560.1400@0.0.1920.1040" timestamp="1611069163350" />
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1610999062660">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/-2560.-363.2560.1400@0.0.1920.1040" timestamp="1610999062660" />
+    <state x="3222" y="288" width="588" height="518" key="find.popup/0.0.2560.1440/2560.0.1920.1080@2560.0.1920.1080" timestamp="1611339781575" />
   </component>
 </project>

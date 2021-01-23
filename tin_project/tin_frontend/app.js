@@ -5345,19 +5345,44 @@ var $elm$browser$Browser$application = _Browser_application;
 var $author$project$Main$BookPage = function (a) {
 	return {$: 'BookPage', a: a};
 };
-var $author$project$Book$initialModel = {
-	allBooks: _List_fromArray(
-		[
-			{id: 1, name: 'twojStary'},
-			{id: 2, name: 'twojaStara'}
-		]),
-	pickedBook: $elm$core$Maybe$Nothing,
-	setName: $elm$core$Maybe$Nothing
-};
+var $author$project$Book$initialModel = {allBooks: _List_Nil, pickedBook: $elm$core$Maybe$Nothing, setDeleteId: $elm$core$Maybe$Nothing, setDetailsId: $elm$core$Maybe$Nothing, setId: $elm$core$Maybe$Nothing, setName: $elm$core$Maybe$Nothing};
 var $author$project$Main$NotFound = {$: 'NotFound'};
 var $author$project$Book$GotBooks = function (a) {
 	return {$: 'GotBooks', a: a};
 };
+var $author$project$Book$GotServerResponse = function (a) {
+	return {$: 'GotServerResponse', a: a};
+};
+var $author$project$Book$bookFromJson = F3(
+	function (name, id, date) {
+		return {date: date, id: id, name: name};
+	});
+var $elm$json$Json$Decode$int = _Json_decodeInt;
+var $elm$json$Json$Decode$list = _Json_decodeList;
+var $NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$custom = $elm$json$Json$Decode$map2($elm$core$Basics$apR);
+var $elm$json$Json$Decode$field = _Json_decodeField;
+var $NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required = F3(
+	function (key, valDecoder, decoder) {
+		return A2(
+			$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$custom,
+			A2($elm$json$Json$Decode$field, key, valDecoder),
+			decoder);
+	});
+var $elm$json$Json$Decode$string = _Json_decodeString;
+var $author$project$Book$booksDecoder = $elm$json$Json$Decode$list(
+	A3(
+		$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
+		'addition_date',
+		$elm$json$Json$Decode$string,
+		A3(
+			$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
+			'id',
+			$elm$json$Json$Decode$int,
+			A3(
+				$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
+				'name',
+				$elm$json$Json$Decode$string,
+				$elm$json$Json$Decode$succeed($author$project$Book$bookFromJson)))));
 var $elm$json$Json$Decode$decodeString = _Json_runOnString;
 var $elm$http$Http$BadStatus_ = F2(
 	function (a, b) {
@@ -6145,55 +6170,97 @@ var $elm$http$Http$get = function (r) {
 	return $elm$http$Http$request(
 		{body: $elm$http$Http$emptyBody, expect: r.expect, headers: _List_Nil, method: 'GET', timeout: $elm$core$Maybe$Nothing, tracker: $elm$core$Maybe$Nothing, url: r.url});
 };
-var $author$project$Book$bookFromJson = F2(
-	function (name, id) {
-		return {id: id, name: name};
-	});
-var $elm$json$Json$Decode$int = _Json_decodeInt;
-var $elm$json$Json$Decode$list = _Json_decodeList;
-var $NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$custom = $elm$json$Json$Decode$map2($elm$core$Basics$apR);
-var $elm$json$Json$Decode$field = _Json_decodeField;
-var $NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required = F3(
-	function (key, valDecoder, decoder) {
-		return A2(
-			$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$custom,
-			A2($elm$json$Json$Decode$field, key, valDecoder),
-			decoder);
-	});
-var $elm$json$Json$Decode$string = _Json_decodeString;
-var $author$project$Book$modelDecoder = $elm$json$Json$Decode$list(
-	A3(
-		$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
-		'id',
-		$elm$json$Json$Decode$int,
-		A3(
-			$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
-			'name',
-			$elm$json$Json$Decode$string,
-			$elm$json$Json$Decode$succeed($author$project$Book$bookFromJson))));
 var $author$project$Book$root = 'http://localhost:3000/books/';
 var $author$project$Book$init = function (_v0) {
 	return _Utils_Tuple2(
 		$author$project$Book$initialModel,
 		$elm$http$Http$get(
 			{
-				expect: A2($elm$http$Http$expectJson, $author$project$Book$GotBooks, $author$project$Book$modelDecoder),
+				expect: A2(
+					$elm$http$Http$expectJson,
+					function (x) {
+						return $author$project$Book$GotServerResponse(
+							$author$project$Book$GotBooks(x));
+					},
+					$author$project$Book$booksDecoder),
 				url: $author$project$Book$root
 			}));
 };
-var $elm$core$Platform$Cmd$batch = _Platform_batch;
-var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
+var $author$project$Collection$GotAllCollections = function (a) {
+	return {$: 'GotAllCollections', a: a};
+};
+var $author$project$Collection$collectionFromJson = F3(
+	function (id, name, date) {
+		return {date: date, id: id, name: name};
+	});
+var $author$project$Collection$collectionDecoder = $elm$json$Json$Decode$list(
+	A3(
+		$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
+		'creation_date',
+		$elm$json$Json$Decode$string,
+		A3(
+			$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
+			'name',
+			$elm$json$Json$Decode$string,
+			A3(
+				$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
+				'id',
+				$elm$json$Json$Decode$int,
+				$elm$json$Json$Decode$succeed($author$project$Collection$collectionFromJson)))));
+var $author$project$Collection$initialModel = {collections: _List_Nil};
+var $author$project$Collection$root = 'http://localhost:3000/collections';
 var $author$project$Collection$init = function (_v0) {
 	return _Utils_Tuple2(
-		{},
-		$elm$core$Platform$Cmd$none);
+		$author$project$Collection$initialModel,
+		$elm$http$Http$get(
+			{
+				expect: A2($elm$http$Http$expectJson, $author$project$Collection$GotAllCollections, $author$project$Collection$collectionDecoder),
+				url: $author$project$Collection$root
+			}));
 };
+var $author$project$User$GotAllUsers = function (a) {
+	return {$: 'GotAllUsers', a: a};
+};
+var $author$project$User$initialModel = {users: _List_Nil};
+var $author$project$User$root = 'http://localhost:3000/users';
+var $author$project$User$userFromJson = F5(
+	function (id, name, surname, email, date) {
+		return {accountCreationDate: date, email: email, id: id, name: name, surname: surname};
+	});
+var $author$project$User$userDecoder = $elm$json$Json$Decode$list(
+	A3(
+		$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
+		'account_creation_date',
+		$elm$json$Json$Decode$string,
+		A3(
+			$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
+			'email',
+			$elm$json$Json$Decode$string,
+			A3(
+				$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
+				'surname',
+				$elm$json$Json$Decode$string,
+				A3(
+					$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
+					'name',
+					$elm$json$Json$Decode$string,
+					A3(
+						$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
+						'id',
+						$elm$json$Json$Decode$int,
+						$elm$json$Json$Decode$succeed($author$project$User$userFromJson)))))));
 var $author$project$User$init = function (_v0) {
 	return _Utils_Tuple2(
-		{},
-		$elm$core$Platform$Cmd$none);
+		$author$project$User$initialModel,
+		$elm$http$Http$get(
+			{
+				expect: A2($elm$http$Http$expectJson, $author$project$User$GotAllUsers, $author$project$User$userDecoder),
+				url: $author$project$User$root
+			}));
 };
 var $elm$core$Debug$log = _Debug_log;
+var $elm$core$Platform$Cmd$batch = _Platform_batch;
+var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
 var $elm$url$Url$Parser$State = F5(
 	function (visited, unvisited, params, frag, value) {
 		return {frag: frag, params: params, unvisited: unvisited, value: value, visited: visited};
@@ -6568,15 +6635,122 @@ var $elm$url$Url$toString = function (url) {
 					_Utils_ap(http, url.host)),
 				url.path)));
 };
-var $author$project$Book$GotPostResponse = function (a) {
-	return {$: 'GotPostResponse', a: a};
+var $author$project$Book$validateName = function (name) {
+	return ($elm$core$String$length(name) <= 3) ? $elm$core$Maybe$Nothing : $elm$core$Maybe$Just(name);
 };
-var $elm$http$Http$expectString = function (toMsg) {
+var $author$project$Book$updateField = F2(
+	function (field, model) {
+		switch (field.$) {
+			case 'Name':
+				var name = field.a;
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{
+							setName: $author$project$Book$validateName(name)
+						}),
+					$elm$core$Platform$Cmd$none);
+			case 'DeleteId':
+				var id = field.a;
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{
+							setDeleteId: $elm$core$Maybe$Just(id)
+						}),
+					$elm$core$Platform$Cmd$none);
+			case 'Id':
+				var id = field.a;
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{
+							setId: $elm$core$Maybe$Just(id)
+						}),
+					$elm$core$Platform$Cmd$none);
+			default:
+				var id = field.a;
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{
+							setDetailsId: $elm$core$Maybe$Just(id)
+						}),
+					$elm$core$Platform$Cmd$none);
+		}
+	});
+var $author$project$Book$updateServerResponse = F2(
+	function (response, model) {
+		_v0$5:
+		while (true) {
+			switch (response.$) {
+				case 'GotBook':
+					if (response.a.$ === 'Ok') {
+						var fullBook = response.a.a;
+						return _Utils_Tuple2(
+							_Utils_update(
+								model,
+								{
+									pickedBook: $elm$core$Maybe$Just(fullBook)
+								}),
+							$elm$core$Platform$Cmd$none);
+					} else {
+						break _v0$5;
+					}
+				case 'GotBooks':
+					if (response.a.$ === 'Ok') {
+						var books = response.a.a;
+						return _Utils_Tuple2(
+							_Utils_update(
+								model,
+								{allBooks: books}),
+							$elm$core$Platform$Cmd$none);
+					} else {
+						break _v0$5;
+					}
+				case 'PostResponse':
+					if (response.a.$ === 'Ok') {
+						return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+					} else {
+						break _v0$5;
+					}
+				case 'PutResponse':
+					if (response.a.$ === 'Ok') {
+						return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+					} else {
+						break _v0$5;
+					}
+				default:
+					if (response.a.$ === 'Ok') {
+						return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+					} else {
+						break _v0$5;
+					}
+			}
+		}
+		return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+	});
+var $author$project$Book$DeleteResponse = function (a) {
+	return {$: 'DeleteResponse', a: a};
+};
+var $elm$http$Http$expectBytesResponse = F2(
+	function (toMsg, toResult) {
+		return A3(
+			_Http_expect,
+			'arraybuffer',
+			_Http_toDataView,
+			A2($elm$core$Basics$composeR, toResult, toMsg));
+	});
+var $elm$http$Http$expectWhatever = function (toMsg) {
 	return A2(
-		$elm$http$Http$expectStringResponse,
+		$elm$http$Http$expectBytesResponse,
 		toMsg,
-		$elm$http$Http$resolve($elm$core$Result$Ok));
+		$elm$http$Http$resolve(
+			function (_v0) {
+				return $elm$core$Result$Ok(_Utils_Tuple0);
+			}));
 };
+var $elm$json$Json$Encode$int = _Json_wrap;
 var $elm$http$Http$jsonBody = function (value) {
 	return A2(
 		_Http_pair,
@@ -6596,7 +6770,6 @@ var $elm$json$Json$Encode$object = function (pairs) {
 			_Json_emptyObject(_Utils_Tuple0),
 			pairs));
 };
-var $elm$json$Json$Encode$string = _Json_wrap;
 var $elm$core$Maybe$withDefault = F2(
 	function (_default, maybe) {
 		if (maybe.$ === 'Just') {
@@ -6606,6 +6779,104 @@ var $elm$core$Maybe$withDefault = F2(
 			return _default;
 		}
 	});
+var $author$project$Book$deleteRequest = function (model) {
+	return $elm$http$Http$request(
+		{
+			body: $elm$http$Http$jsonBody(
+				$elm$json$Json$Encode$object(
+					_List_fromArray(
+						[
+							_Utils_Tuple2(
+							'id',
+							$elm$json$Json$Encode$int(
+								A2($elm$core$Maybe$withDefault, 0, model.setDeleteId)))
+						]))),
+			expect: $elm$http$Http$expectWhatever(
+				function (x) {
+					return $author$project$Book$GotServerResponse(
+						$author$project$Book$DeleteResponse(x));
+				}),
+			headers: _List_Nil,
+			method: 'DELETE',
+			timeout: $elm$core$Maybe$Just(0.1),
+			tracker: $elm$core$Maybe$Nothing,
+			url: $author$project$Book$root
+		});
+};
+var $author$project$Book$GotBook = function (a) {
+	return {$: 'GotBook', a: a};
+};
+var $author$project$Book$getFullBook = F4(
+	function (authors, name, date, id) {
+		return {authors: authors, date: date, id: id, name: name};
+	});
+var $author$project$Book$authorFromJson = F2(
+	function (name, surname) {
+		return {name: name, surname: surname};
+	});
+var $author$project$Book$listOfAuthorsDecoder = $elm$json$Json$Decode$list(
+	A3(
+		$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
+		'authorSurname',
+		$elm$json$Json$Decode$string,
+		A3(
+			$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
+			'authorName',
+			$elm$json$Json$Decode$string,
+			$elm$json$Json$Decode$succeed($author$project$Book$authorFromJson))));
+var $elm$json$Json$Decode$at = F2(
+	function (fields, decoder) {
+		return A3($elm$core$List$foldr, $elm$json$Json$Decode$field, decoder, fields);
+	});
+var $NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$requiredAt = F3(
+	function (path, valDecoder, decoder) {
+		return A2(
+			$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$custom,
+			A2($elm$json$Json$Decode$at, path, valDecoder),
+			decoder);
+	});
+var $author$project$Book$fullBookDecoder = A3(
+	$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
+	'id',
+	$elm$json$Json$Decode$int,
+	A3(
+		$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
+		'bookDate',
+		$elm$json$Json$Decode$string,
+		A3(
+			$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
+			'name',
+			$elm$json$Json$Decode$string,
+			A3(
+				$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$requiredAt,
+				_List_fromArray(
+					['authors']),
+				$author$project$Book$listOfAuthorsDecoder,
+				$elm$json$Json$Decode$succeed($author$project$Book$getFullBook)))));
+var $author$project$Book$getRequest = function (id) {
+	return $elm$http$Http$request(
+		{
+			body: $elm$http$Http$emptyBody,
+			expect: A2(
+				$elm$http$Http$expectJson,
+				function (x) {
+					return $author$project$Book$GotServerResponse(
+						$author$project$Book$GotBook(x));
+				},
+				$author$project$Book$fullBookDecoder),
+			headers: _List_Nil,
+			method: 'GET',
+			timeout: $elm$core$Maybe$Just(0.1),
+			tracker: $elm$core$Maybe$Nothing,
+			url: _Utils_ap(
+				$author$project$Book$root,
+				$elm$core$String$fromInt(id))
+		});
+};
+var $author$project$Book$PostResponse = function (a) {
+	return {$: 'PostResponse', a: a};
+};
+var $elm$json$Json$Encode$string = _Json_wrap;
 var $author$project$Book$postRequest = function (model) {
 	return $elm$http$Http$request(
 		{
@@ -6618,7 +6889,11 @@ var $author$project$Book$postRequest = function (model) {
 							$elm$json$Json$Encode$string(
 								A2($elm$core$Maybe$withDefault, '', model.setName)))
 						]))),
-			expect: $elm$http$Http$expectString($author$project$Book$GotPostResponse),
+			expect: $elm$http$Http$expectWhatever(
+				function (x) {
+					return $author$project$Book$GotServerResponse(
+						$author$project$Book$PostResponse(x));
+				}),
 			headers: _List_Nil,
 			method: 'POST',
 			timeout: $elm$core$Maybe$Just(0.1),
@@ -6626,50 +6901,99 @@ var $author$project$Book$postRequest = function (model) {
 			url: $author$project$Book$root
 		});
 };
-var $author$project$Book$update = F2(
-	function (msg, model) {
-		switch (msg.$) {
-			case 'SubmitForm':
+var $author$project$Book$PutResponse = function (a) {
+	return {$: 'PutResponse', a: a};
+};
+var $author$project$Book$putRequest = function (model) {
+	return $elm$http$Http$request(
+		{
+			body: $elm$http$Http$jsonBody(
+				$elm$json$Json$Encode$object(
+					_List_fromArray(
+						[
+							_Utils_Tuple2(
+							'name',
+							$elm$json$Json$Encode$string(
+								A2($elm$core$Maybe$withDefault, '', model.setName))),
+							_Utils_Tuple2(
+							'id',
+							$elm$json$Json$Encode$int(
+								A2($elm$core$Maybe$withDefault, 0, model.setId)))
+						]))),
+			expect: $elm$http$Http$expectWhatever(
+				function (x) {
+					return $author$project$Book$GotServerResponse(
+						$author$project$Book$PutResponse(x));
+				}),
+			headers: _List_Nil,
+			method: 'PUT',
+			timeout: $elm$core$Maybe$Just(0.1),
+			tracker: $elm$core$Maybe$Nothing,
+			url: $author$project$Book$root
+		});
+};
+var $author$project$Book$updateSubmit = F2(
+	function (submit, model) {
+		switch (submit.$) {
+			case 'SubmitPost':
 				return _Utils_Tuple2(
 					model,
 					$author$project$Book$postRequest(model));
-			case 'GotPostResponse':
-				if (msg.a.$ === 'Err') {
-					var error = msg.a.a;
-					switch (error.$) {
-						case 'BadBody':
-							var s = error.a;
-							return A2(
-								$elm$core$Debug$log,
-								s,
-								_Utils_Tuple2(model, $elm$core$Platform$Cmd$none));
-						case 'BadUrl':
-							var s = error.a;
-							return A2(
-								$elm$core$Debug$log,
-								s,
-								_Utils_Tuple2(model, $elm$core$Platform$Cmd$none));
-						default:
-							return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
-					}
-				} else {
-					var a = msg.a.a;
-					return A2(
-						$elm$core$Debug$log,
-						'Ok',
-						_Utils_Tuple2(model, $elm$core$Platform$Cmd$none));
-				}
-			case 'SetName':
-				var name = msg.a;
+			case 'SubmitPut':
 				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{
-							setName: $elm$core$Maybe$Just(name)
-						}),
-					$elm$core$Platform$Cmd$none);
+					model,
+					$author$project$Book$putRequest(model));
+			case 'SubmitDelete':
+				return _Utils_Tuple2(
+					model,
+					$author$project$Book$deleteRequest(model));
 			default:
-				return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+				return _Utils_Tuple2(
+					model,
+					$author$project$Book$getRequest(
+						A2($elm$core$Maybe$withDefault, 0, model.setDetailsId)));
+		}
+	});
+var $author$project$Book$update = F2(
+	function (msg, model) {
+		switch (msg.$) {
+			case 'GotSubmit':
+				var s = msg.a;
+				return A2($author$project$Book$updateSubmit, s, model);
+			case 'SetField':
+				var field = msg.a;
+				return A2($author$project$Book$updateField, field, model);
+			default:
+				var response = msg.a;
+				return A2($author$project$Book$updateServerResponse, response, model);
+		}
+	});
+var $author$project$Collection$update = F2(
+	function (msg, model) {
+		if (msg.a.$ === 'Ok') {
+			var collections = msg.a.a;
+			return _Utils_Tuple2(
+				_Utils_update(
+					model,
+					{collections: collections}),
+				$elm$core$Platform$Cmd$none);
+		} else {
+			var error = msg.a.a;
+			return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+		}
+	});
+var $author$project$User$update = F2(
+	function (msg, model) {
+		if (msg.a.$ === 'Ok') {
+			var users = msg.a.a;
+			return _Utils_Tuple2(
+				_Utils_update(
+					model,
+					{users: users}),
+				$elm$core$Platform$Cmd$none);
+		} else {
+			var error = msg.a.a;
+			return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
 		}
 	});
 var $author$project$Main$update = F2(
@@ -6684,6 +7008,30 @@ var $author$project$Main$update = F2(
 						$author$project$Main$toBooks,
 						model,
 						A2($author$project$Book$update, bookMsg, bookModel));
+				} else {
+					return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+				}
+			case 'GotUserMsg':
+				var userMsg = msg.a;
+				var _v2 = model.currentPage;
+				if (_v2.$ === 'UserPage') {
+					var userModel = _v2.a;
+					return A2(
+						$author$project$Main$toUsers,
+						model,
+						A2($author$project$User$update, userMsg, userModel));
+				} else {
+					return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+				}
+			case 'GotCollectionMsg':
+				var collectionMsg = msg.a;
+				var _v3 = model.currentPage;
+				if (_v3.$ === 'CollectionPage') {
+					var collectionModel = _v3.a;
+					return A2(
+						$author$project$Main$toCollections,
+						model,
+						A2($author$project$Collection$update, collectionMsg, collectionModel));
 				} else {
 					return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
 				}
@@ -6708,14 +7056,12 @@ var $author$project$Main$update = F2(
 									$elm$url$Url$toString(url)));
 						}
 					}());
-			case 'ChangedUrl':
+			default:
 				var url = msg.a;
 				return A2(
 					$elm$core$Debug$log,
 					'Hello changed url ',
 					A2($author$project$Main$updateUrl, url, model));
-			default:
-				return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
 		}
 	});
 var $elm$html$Html$div = _VirtualDom_node('div');
@@ -6723,22 +7069,16 @@ var $elm$virtual_dom$VirtualDom$map = _VirtualDom_map;
 var $elm$html$Html$map = $elm$virtual_dom$VirtualDom$map;
 var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
 var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
-var $elm$html$Html$li = _VirtualDom_node('li');
-var $author$project$Book$bookRecord = function (book) {
-	return A2(
-		$elm$html$Html$li,
-		_List_Nil,
-		_List_fromArray(
-			[
-				$elm$html$Html$text(
-				'Id : ' + ($elm$core$String$fromInt(book.id) + (', Name :' + book.name)))
-			]));
+var $author$project$Book$GotSubmit = function (a) {
+	return {$: 'GotSubmit', a: a};
 };
-var $elm$html$Html$br = _VirtualDom_node('br');
-var $author$project$Book$SetName = function (a) {
-	return {$: 'SetName', a: a};
+var $author$project$Book$Name = function (a) {
+	return {$: 'Name', a: a};
 };
-var $author$project$Book$SubmitForm = {$: 'SubmitForm'};
+var $author$project$Book$SetField = function (a) {
+	return {$: 'SetField', a: a};
+};
+var $author$project$Book$SubmitPost = {$: 'SubmitPost'};
 var $elm$html$Html$button = _VirtualDom_node('button');
 var $elm$html$Html$form = _VirtualDom_node('form');
 var $elm$html$Html$input = _VirtualDom_node('input');
@@ -6756,10 +7096,6 @@ var $elm$html$Html$Events$stopPropagationOn = F2(
 			$elm$virtual_dom$VirtualDom$on,
 			event,
 			$elm$virtual_dom$VirtualDom$MayStopPropagation(decoder));
-	});
-var $elm$json$Json$Decode$at = F2(
-	function (fields, decoder) {
-		return A3($elm$core$List$foldr, $elm$json$Json$Decode$field, decoder, fields);
 	});
 var $elm$html$Html$Events$targetValue = A2(
 	$elm$json$Json$Decode$at,
@@ -6804,14 +7140,222 @@ var $elm$html$Html$Attributes$stringProperty = F2(
 			key,
 			$elm$json$Json$Encode$string(string));
 	});
+var $elm$html$Html$Attributes$pattern = $elm$html$Html$Attributes$stringProperty('pattern');
 var $elm$html$Html$Attributes$placeholder = $elm$html$Html$Attributes$stringProperty('placeholder');
 var $elm$html$Html$Attributes$type_ = $elm$html$Html$Attributes$stringProperty('type');
-var $author$project$Book$viewForm = function (model) {
+var $author$project$Book$addForm = function (model) {
 	return A2(
 		$elm$html$Html$form,
 		_List_fromArray(
 			[
-				$elm$html$Html$Events$onSubmit($author$project$Book$SubmitForm)
+				$elm$html$Html$Events$onSubmit(
+				$author$project$Book$GotSubmit($author$project$Book$SubmitPost))
+			]),
+		_List_fromArray(
+			[
+				A2(
+				$elm$html$Html$label,
+				_List_Nil,
+				_List_fromArray(
+					[
+						$elm$html$Html$text('Enter name'),
+						A2(
+						$elm$html$Html$input,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$type_('text'),
+								$elm$html$Html$Attributes$pattern('[A-Za-z]{3,}'),
+								$elm$html$Html$Attributes$placeholder('Name'),
+								$elm$html$Html$Events$onInput(
+								function (x) {
+									return $author$project$Book$SetField(
+										$author$project$Book$Name(x));
+								})
+							]),
+						_List_Nil),
+						A2(
+						$elm$html$Html$button,
+						_List_Nil,
+						_List_fromArray(
+							[
+								$elm$html$Html$text('Add')
+							]))
+					]))
+			]));
+};
+var $author$project$Book$addBookView = function (model) {
+	return A2(
+		$elm$html$Html$div,
+		_List_Nil,
+		_List_fromArray(
+			[
+				$elm$html$Html$text('Add book'),
+				$author$project$Book$addForm(model)
+			]));
+};
+var $elm$html$Html$li = _VirtualDom_node('li');
+var $author$project$Book$bookRecord = function (book) {
+	return A2(
+		$elm$html$Html$li,
+		_List_Nil,
+		_List_fromArray(
+			[
+				$elm$html$Html$text(
+				'Id: ' + ($elm$core$String$fromInt(book.id) + (', Name:' + (book.name + (', Date: ' + book.date)))))
+			]));
+};
+var $author$project$Book$DeleteId = function (a) {
+	return {$: 'DeleteId', a: a};
+};
+var $author$project$Book$SubmitDelete = {$: 'SubmitDelete'};
+var $elm$html$Html$Attributes$min = $elm$html$Html$Attributes$stringProperty('min');
+var $author$project$Book$deleteForm = function (model) {
+	return A2(
+		$elm$html$Html$form,
+		_List_fromArray(
+			[
+				$elm$html$Html$Events$onSubmit(
+				$author$project$Book$GotSubmit($author$project$Book$SubmitDelete))
+			]),
+		_List_fromArray(
+			[
+				A2(
+				$elm$html$Html$label,
+				_List_Nil,
+				_List_fromArray(
+					[
+						$elm$html$Html$text('Id to delete'),
+						A2(
+						$elm$html$Html$input,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$type_('number'),
+								$elm$html$Html$Attributes$min('1'),
+								$elm$html$Html$Events$onInput(
+								function (x) {
+									return $author$project$Book$SetField(
+										$author$project$Book$DeleteId(
+											A2(
+												$elm$core$Maybe$withDefault,
+												0,
+												$elm$core$String$toInt(x))));
+								})
+							]),
+						_List_Nil),
+						A2(
+						$elm$html$Html$button,
+						_List_Nil,
+						_List_fromArray(
+							[
+								$elm$html$Html$text('Delete')
+							]))
+					]))
+			]));
+};
+var $author$project$Book$deleteBookView = function (model) {
+	return A2(
+		$elm$html$Html$div,
+		_List_Nil,
+		_List_fromArray(
+			[
+				$elm$html$Html$text('Delete book'),
+				$author$project$Book$deleteForm(model)
+			]));
+};
+var $author$project$Book$DetailsId = function (a) {
+	return {$: 'DetailsId', a: a};
+};
+var $author$project$Book$SubmitGet = {$: 'SubmitGet'};
+var $author$project$Book$getBookDetailsForm = A2(
+	$elm$html$Html$form,
+	_List_fromArray(
+		[
+			$elm$html$Html$Events$onSubmit(
+			$author$project$Book$GotSubmit($author$project$Book$SubmitGet))
+		]),
+	_List_fromArray(
+		[
+			A2(
+			$elm$html$Html$label,
+			_List_Nil,
+			_List_fromArray(
+				[
+					$elm$html$Html$text('Id'),
+					A2(
+					$elm$html$Html$input,
+					_List_fromArray(
+						[
+							$elm$html$Html$Attributes$type_('number'),
+							$elm$html$Html$Attributes$min('1'),
+							$elm$html$Html$Events$onInput(
+							function (x) {
+								return $author$project$Book$SetField(
+									$author$project$Book$DetailsId(
+										A2(
+											$elm$core$Maybe$withDefault,
+											0,
+											$elm$core$String$toInt(x))));
+							})
+						]),
+					_List_Nil),
+					A2(
+					$elm$html$Html$button,
+					_List_Nil,
+					_List_fromArray(
+						[
+							$elm$html$Html$text('Get info')
+						]))
+				]))
+		]));
+var $author$project$Book$showBookView = A2(
+	$elm$html$Html$div,
+	_List_Nil,
+	_List_fromArray(
+		[
+			$elm$html$Html$text('Get Book details'),
+			$author$project$Book$getBookDetailsForm
+		]));
+var $author$project$Book$showAuthor = function (data) {
+	return A2(
+		$elm$html$Html$li,
+		_List_Nil,
+		_List_fromArray(
+			[
+				$elm$html$Html$text('name :' + (data.name + (' Surname: ' + data.surname)))
+			]));
+};
+var $elm$html$Html$ul = _VirtualDom_node('ul');
+var $author$project$Book$showDetails = function (model) {
+	var _v0 = model.pickedBook;
+	if (_v0.$ === 'Nothing') {
+		return $elm$html$Html$text('No details were requested');
+	} else {
+		var fullBook = _v0.a;
+		return A2(
+			$elm$html$Html$div,
+			_List_Nil,
+			_List_fromArray(
+				[
+					$elm$html$Html$text(
+					'Id: ' + ($elm$core$String$fromInt(fullBook.id) + (', Name: ' + (fullBook.name + (', Date: ' + fullBook.date))))),
+					A2(
+					$elm$html$Html$ul,
+					_List_Nil,
+					A2($elm$core$List$map, $author$project$Book$showAuthor, fullBook.authors))
+				]));
+	}
+};
+var $author$project$Book$Id = function (a) {
+	return {$: 'Id', a: a};
+};
+var $author$project$Book$SubmitPut = {$: 'SubmitPut'};
+var $author$project$Book$updateForm = function (model) {
+	return A2(
+		$elm$html$Html$form,
+		_List_fromArray(
+			[
+				$elm$html$Html$Events$onSubmit(
+				$author$project$Book$GotSubmit($author$project$Book$SubmitPut))
 			]),
 		_List_fromArray(
 			[
@@ -6827,17 +7371,57 @@ var $author$project$Book$viewForm = function (model) {
 							[
 								$elm$html$Html$Attributes$type_('text'),
 								$elm$html$Html$Attributes$placeholder('Name'),
-								$elm$html$Html$Events$onInput($author$project$Book$SetName)
+								$elm$html$Html$Attributes$pattern('[A-Za-z]{3,}'),
+								$elm$html$Html$Events$onInput(
+								function (x) {
+									return $author$project$Book$SetField(
+										$author$project$Book$Name(x));
+								})
 							]),
-						_List_Nil),
+						_List_Nil)
+					])),
+				A2(
+				$elm$html$Html$label,
+				_List_Nil,
+				_List_fromArray(
+					[
+						$elm$html$Html$text('Enter id'),
 						A2(
-						$elm$html$Html$button,
-						_List_Nil,
+						$elm$html$Html$input,
 						_List_fromArray(
 							[
-								$elm$html$Html$text('Submit')
-							]))
+								$elm$html$Html$Attributes$type_('number'),
+								$elm$html$Html$Attributes$placeholder('0'),
+								$elm$html$Html$Attributes$min('1'),
+								$elm$html$Html$Events$onInput(
+								function (x) {
+									return $author$project$Book$SetField(
+										$author$project$Book$Id(
+											A2(
+												$elm$core$Maybe$withDefault,
+												0,
+												$elm$core$String$toInt(x))));
+								})
+							]),
+						_List_Nil)
+					])),
+				A2(
+				$elm$html$Html$button,
+				_List_Nil,
+				_List_fromArray(
+					[
+						$elm$html$Html$text('Update')
 					]))
+			]));
+};
+var $author$project$Book$updateBookView = function (model) {
+	return A2(
+		$elm$html$Html$div,
+		_List_Nil,
+		_List_fromArray(
+			[
+				$elm$html$Html$text('Update Book '),
+				$author$project$Book$updateForm(model)
 			]));
 };
 var $author$project$Book$view = function (model) {
@@ -6847,20 +7431,56 @@ var $author$project$Book$view = function (model) {
 		_Utils_ap(
 			_List_fromArray(
 				[
-					$author$project$Book$viewForm(model)
+					$author$project$Book$addBookView(model),
+					$author$project$Book$updateBookView(model),
+					$author$project$Book$deleteBookView(model),
+					$author$project$Book$showBookView,
+					$author$project$Book$showDetails(model)
 				]),
-			_Utils_ap(
-				_List_fromArray(
-					[
-						A2($elm$html$Html$br, _List_Nil, _List_Nil)
-					]),
-				A2($elm$core$List$map, $author$project$Book$bookRecord, model.allBooks))));
+			A2($elm$core$List$map, $author$project$Book$bookRecord, model.allBooks)));
 };
-var $author$project$Collection$view = function (_v0) {
-	return $elm$html$Html$text('Hi its collection page');
+var $author$project$Collection$collectionRecord = function (c) {
+	return A2(
+		$elm$html$Html$li,
+		_List_Nil,
+		_List_fromArray(
+			[
+				$elm$html$Html$text(
+				'Id : ' + ($elm$core$String$fromInt(c.id) + (', name: ' + (c.name + (', date' + c.date)))))
+			]));
 };
-var $author$project$User$view = function (_v0) {
-	return $elm$html$Html$text('Hi');
+var $author$project$Collection$view = function (model) {
+	return A2(
+		$elm$html$Html$div,
+		_List_Nil,
+		_List_fromArray(
+			[
+				A2(
+				$elm$html$Html$ul,
+				_List_Nil,
+				A2($elm$core$List$map, $author$project$Collection$collectionRecord, model.collections))
+			]));
+};
+var $author$project$User$userRecord = function (user) {
+	return A2(
+		$elm$html$Html$li,
+		_List_Nil,
+		_List_fromArray(
+			[
+				$elm$html$Html$text('Name: ' + (user.name + (', Surname: ' + (user.surname + (', email: ' + user.email)))))
+			]));
+};
+var $author$project$User$view = function (model) {
+	return A2(
+		$elm$html$Html$div,
+		_List_Nil,
+		_List_fromArray(
+			[
+				A2(
+				$elm$html$Html$ul,
+				_List_Nil,
+				A2($elm$core$List$map, $author$project$User$userRecord, model.users))
+			]));
 };
 var $elm$html$Html$a = _VirtualDom_node('a');
 var $elm$html$Html$Attributes$class = $elm$html$Html$Attributes$stringProperty('className');
@@ -6928,7 +7548,6 @@ var $author$project$Main$isActive = function (_v0) {
 	}
 };
 var $elm$html$Html$nav = _VirtualDom_node('nav');
-var $elm$html$Html$ul = _VirtualDom_node('ul');
 var $author$project$Main$viewHeader = function (page) {
 	var navLink = F2(
 		function (targetPage, _v0) {
@@ -7002,8 +7621,7 @@ var $author$project$Main$view = function (model) {
 				_List_fromArray(
 					[
 						$author$project$Main$viewHeader(
-						$author$project$Main$UserPage(
-							{})),
+						$author$project$Main$UserPage($author$project$User$initialModel)),
 						function () {
 						var _v0 = model.currentPage;
 						switch (_v0.$) {

@@ -37,7 +37,7 @@ view model =
         { title = "good reads"
         , body =  [
         div []
-            [ viewHeader (UserPage {})
+            [ viewHeader (UserPage User.initialModel)
             , case model.currentPage of
                 UserPage userModel ->
                     User.view userModel
@@ -108,6 +108,18 @@ update msg model =
                     toBooks model  (Book.update bookMsg bookModel)
                 _ ->
                     (model, Cmd.none)
+        GotUserMsg userMsg ->
+            case model.currentPage of
+                UserPage userModel ->
+                    toUsers model (User.update userMsg userModel)
+                _ ->
+                    (model, Cmd.none)
+        GotCollectionMsg collectionMsg ->
+                     case model.currentPage of
+                         CollectionPage collectionModel ->
+                             toCollections model (Collection.update collectionMsg collectionModel)
+                         _ ->
+                             (model, Cmd.none)
         ClickedLink urlRequest ->
                      Debug.log "Hello clicked link"(
                      case urlRequest of
@@ -121,8 +133,6 @@ update msg model =
             updateUrl url model
            )
 
-        _ ->
-            (model, Cmd.none)
 
 
 

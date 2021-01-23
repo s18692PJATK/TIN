@@ -3,7 +3,7 @@ import Html exposing (..)
 import Html exposing(..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick, onInput, onSubmit)
-import Http
+import Http exposing (Error(..))
 import Json.Decode as Decode exposing(Decoder,int,list,string)
 import Json.Encode as Encode exposing (..)
 import Json.Decode.Pipeline as Pipeline exposing (required)
@@ -16,7 +16,7 @@ type alias Model = { allBooks : (List BookData)
                    }
 
 root : String
-root = "localhost:3000/books/"
+root = "http://localhost:3000/books/"
 type Msg
     = GetAllBooks
     | GetBookById Int
@@ -55,7 +55,6 @@ viewForm model =
                [ type_ "text"
                , placeholder "Name"
                , onInput SetName
-               , value (Maybe.withDefault "" model.setName)
                ]
                []
        , button
@@ -73,7 +72,7 @@ postRequest model =
         , body = Http.jsonBody (Encode.object
             [ ("name", Encode.string (Maybe.withDefault "" model.setName))])
         , expect = Http.expectString GotPostResponse
-        , timeout = Just 1
+        , timeout = Just 0.1
         , tracker = Nothing
         }
 
@@ -116,9 +115,19 @@ update msg model =
                 (model, (postRequest model))
 
             GotPostResponse (Err error) ->
-                Debug.log "Error" (model, Cmd.none)
+                    case error of
+                        BadBody s ->
+                            Debug.log s (model, Cmd.none)
+                        BadUrl s ->
+                            Debug.log s (model, Cmd.none)
+                        _ ->
+                            (model, Cmd.none)
             GotPostResponse (Ok a) ->
                 Debug.log "Ok" (model, Cmd.none)
+
+            SetName name ->
+                ( { model | setName = Just name }, Cmd.none)
             _ ->
+
                 (model, Cmd.none)
 

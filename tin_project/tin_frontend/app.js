@@ -6171,7 +6171,7 @@ var $author$project$Book$modelDecoder = $elm$json$Json$Decode$list(
 			'name',
 			$elm$json$Json$Decode$string,
 			$elm$json$Json$Decode$succeed($author$project$Book$bookFromJson))));
-var $author$project$Book$root = 'localhost:3000/books/';
+var $author$project$Book$root = 'http://localhost:3000/books/';
 var $author$project$Book$init = function (_v0) {
 	return _Utils_Tuple2(
 		$author$project$Book$initialModel,
@@ -6621,7 +6621,7 @@ var $author$project$Book$postRequest = function (model) {
 			expect: $elm$http$Http$expectString($author$project$Book$GotPostResponse),
 			headers: _List_Nil,
 			method: 'POST',
-			timeout: $elm$core$Maybe$Just(1),
+			timeout: $elm$core$Maybe$Just(0.1),
 			tracker: $elm$core$Maybe$Nothing,
 			url: $author$project$Book$root
 		});
@@ -6636,10 +6636,22 @@ var $author$project$Book$update = F2(
 			case 'GotPostResponse':
 				if (msg.a.$ === 'Err') {
 					var error = msg.a.a;
-					return A2(
-						$elm$core$Debug$log,
-						'Error',
-						_Utils_Tuple2(model, $elm$core$Platform$Cmd$none));
+					switch (error.$) {
+						case 'BadBody':
+							var s = error.a;
+							return A2(
+								$elm$core$Debug$log,
+								s,
+								_Utils_Tuple2(model, $elm$core$Platform$Cmd$none));
+						case 'BadUrl':
+							var s = error.a;
+							return A2(
+								$elm$core$Debug$log,
+								s,
+								_Utils_Tuple2(model, $elm$core$Platform$Cmd$none));
+						default:
+							return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+					}
 				} else {
 					var a = msg.a.a;
 					return A2(
@@ -6647,6 +6659,15 @@ var $author$project$Book$update = F2(
 						'Ok',
 						_Utils_Tuple2(model, $elm$core$Platform$Cmd$none));
 				}
+			case 'SetName':
+				var name = msg.a;
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{
+							setName: $elm$core$Maybe$Just(name)
+						}),
+					$elm$core$Platform$Cmd$none);
 			default:
 				return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
 		}
@@ -6785,7 +6806,6 @@ var $elm$html$Html$Attributes$stringProperty = F2(
 	});
 var $elm$html$Html$Attributes$placeholder = $elm$html$Html$Attributes$stringProperty('placeholder');
 var $elm$html$Html$Attributes$type_ = $elm$html$Html$Attributes$stringProperty('type');
-var $elm$html$Html$Attributes$value = $elm$html$Html$Attributes$stringProperty('value');
 var $author$project$Book$viewForm = function (model) {
 	return A2(
 		$elm$html$Html$form,
@@ -6807,9 +6827,7 @@ var $author$project$Book$viewForm = function (model) {
 							[
 								$elm$html$Html$Attributes$type_('text'),
 								$elm$html$Html$Attributes$placeholder('Name'),
-								$elm$html$Html$Events$onInput($author$project$Book$SetName),
-								$elm$html$Html$Attributes$value(
-								A2($elm$core$Maybe$withDefault, '', model.setName))
+								$elm$html$Html$Events$onInput($author$project$Book$SetName)
 							]),
 						_List_Nil),
 						A2(

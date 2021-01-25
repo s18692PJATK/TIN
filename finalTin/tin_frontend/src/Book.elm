@@ -19,6 +19,7 @@ type alias FullBookData = { name : String
 
 type alias AuthorData = { name :String
                         , surname : String
+                        , date : String
                         }
 type alias AddBookData = { name : String }
 
@@ -225,7 +226,7 @@ showDetails model =
 
 showAuthor: AuthorData -> Html Msg
 showAuthor data =
-    li [] [ text ("name :" ++ data.name ++ " Surname: " ++ data.surname)]
+    li [] [ text ("name :" ++ data.name ++ " Surname: " ++ data.surname ++", date: " ++ data.date)]
 
 view : Model -> Html Msg
 view model =
@@ -305,13 +306,15 @@ listOfAuthorsDecoder =
    Decode.succeed authorFromJson
     |> Pipeline.required "authorName" Decode.string
     |> Pipeline.required "authorSurname" Decode.string
+    |> Pipeline.required "additionDate" Decode.string
     |> Decode.list
 
 
-authorFromJson :  String -> String-> AuthorData
-authorFromJson name surname =
+authorFromJson :  String -> String-> String -> AuthorData
+authorFromJson name surname date=
     { name = name
     , surname = surname
+    , date = date
     }
 
 

@@ -6810,20 +6810,24 @@ var $author$project$Book$getFullBook = F4(
 	function (authors, name, date, id) {
 		return {authors: authors, date: date, id: id, name: name};
 	});
-var $author$project$Book$authorFromJson = F2(
-	function (name, surname) {
-		return {name: name, surname: surname};
+var $author$project$Book$authorFromJson = F3(
+	function (name, surname, date) {
+		return {date: date, name: name, surname: surname};
 	});
 var $author$project$Book$listOfAuthorsDecoder = $elm$json$Json$Decode$list(
 	A3(
 		$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
-		'authorSurname',
+		'additionDate',
 		$elm$json$Json$Decode$string,
 		A3(
 			$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
-			'authorName',
+			'authorSurname',
 			$elm$json$Json$Decode$string,
-			$elm$json$Json$Decode$succeed($author$project$Book$authorFromJson))));
+			A3(
+				$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
+				'authorName',
+				$elm$json$Json$Decode$string,
+				$elm$json$Json$Decode$succeed($author$project$Book$authorFromJson)))));
 var $elm$json$Json$Decode$at = F2(
 	function (fields, decoder) {
 		return A3($elm$core$List$foldr, $elm$json$Json$Decode$field, decoder, fields);
@@ -7321,7 +7325,7 @@ var $author$project$Book$showAuthor = function (data) {
 		_List_Nil,
 		_List_fromArray(
 			[
-				$elm$html$Html$text('name :' + (data.name + (' Surname: ' + data.surname)))
+				$elm$html$Html$text('name :' + (data.name + (' Surname: ' + (data.surname + (', date: ' + data.date)))))
 			]));
 };
 var $elm$html$Html$ul = _VirtualDom_node('ul');

@@ -1,13 +1,3 @@
-drop table collection_user;
-drop table collection_book;
-drop table author_book;
-drop table collection_user;
-drop table collection_book;
-drop table user;
-drop table  author;
-drop table book;
-drop table collection;
-
 
 create table user
 (
